@@ -7,12 +7,16 @@ import { AuthService } from './auth.service';
 
 export const routes: Routes = [
   {
-    path : "",
+    path : "home",
     component : HomeComponent,
     canActivate : [() => inject(AuthService).isAuthenticate()]
   },
   {
     path : "login",
+    component : LoginComponent
+  },
+  {
+    path : "",
     component : LoginComponent
   },
   {

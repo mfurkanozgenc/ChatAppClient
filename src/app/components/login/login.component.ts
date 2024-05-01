@@ -20,10 +20,11 @@ export class LoginComponent {
 
  }
  login(){
+  if(!this.name){return;}
    this.http.get("https://localhost:7056/api/Auth/Login?name="+this.name).subscribe(res =>{
     localStorage.setItem("acessToken",JSON.stringify(res));
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl("/home");
    })
-   
+
  }
 }

@@ -3,4 +3,6 @@ export class UserModel{
   name: string = "";
   status: string = "";
   avatar: string = "";
+  lastActiveDate : string = "";
+  newMessageCount : number = 0;
 }

@@ -36,6 +36,7 @@ export class HomeComponent {
 
       this.hub?.on("Users",(res : UserModel) => {
         this.users.find(p => p.id == res.id)!.status = res.status;
+        this.users.find(p => p.id == res.id)!.lastActiveDate = res.lastActiveDate;
       })
 
       this.hub?.on("Messages",(res : ChatModel) =>{
@@ -43,11 +44,27 @@ export class HomeComponent {
           this.chats.push(res);
         }
       })
+      this.hub?.on("ChangeMessages",(res : ChatModel[]) =>{
+        var filteredMessages = res.filter(c => c.userId == this.user.id && c.toUserId === this.selectedUser.id);
+        this.chats = filteredMessages;
+      })
+
+      this.hub?.on("AllNotReadChats",(res : ChatModel[]) =>{
+        console.log("TÜM OKUNMAYAN MESAJLAR",res);
+        this.users.forEach(user => {
+          var userNewMessagess = res.filter(m => m.userId === user.id);
+          user.newMessageCount = userNewMessagess.length;
+        });
+
+      })
     })
   }
   getUsers(){
     this.http.get<UserModel[]>("https://localhost:7056/api/Chats/GetUsers").subscribe(res =>{
         this.users = res.filter(p => p.id != this.user.id);
+        this.users.forEach(user => {
+            user.newMessageCount = 0;
+        });
     })
   }
   changeUser(user: UserModel){
@@ -61,6 +78,7 @@ export class HomeComponent {
   }
 
   sendMessage(){
+    if(!this.message){return;}
     const data = {
       "userId":this.user.id,
       "toUserId":this.selectedUser.id,
