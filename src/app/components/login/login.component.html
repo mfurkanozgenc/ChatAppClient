@@ -1,0 +1,23 @@
+<div class="row d-flex justify-content-center align-items-center" style="height: 98vh;">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 style="text-align: center;">Giriş Sayfası</h3>
+          <p style="text-align: center;">Giriş Yapmak İçin Bilgilerinizi Doldurun</p>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Name</label>
+            <input [(ngModel)]="name" type="text" class="form-control" (keydown.enter)="login()">
+          </div>
+          <div class="form-group mt-4">
+            <button class="btn btn-dark w-100" (click)="login()">Giriş Yap</button>
+
+          </div>
+          <div class="form-groug mt-2">
+            <a href="/register" style="text-decoration: none;text-align: center;">Kayıt Ol</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
