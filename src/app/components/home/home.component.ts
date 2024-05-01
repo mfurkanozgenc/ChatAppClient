@@ -5,10 +5,11 @@ import { UserModel } from '../../models/userModel';
 import { ChatModel } from '../../models/chatModel';
 import { FormsModule } from '@angular/forms';
 import * as signalR from '@microsoft/signalr'
+import { FilterPipe } from '../../pipes/filter.pipe';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,FilterPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -50,6 +51,7 @@ export class HomeComponent {
     })
   }
   changeUser(user: UserModel){
+    this.search = "";
     this.selectedUserId = user.id;
     this.selectedUser = user;
     const url = `https://localhost:7056/api/Chats/GetChats?userId=${this.user.id}&toUserId=${this.selectedUser.id}`;
